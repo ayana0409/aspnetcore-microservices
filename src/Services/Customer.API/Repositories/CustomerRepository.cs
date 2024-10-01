@@ -6,16 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Customer.API.Repositories
 {
-    public class CustomerRepository : RepositoryBaseAsync<Entities.Customer, int, CustomerContext>, ICustomerRepository
+    public class CustomerRepository : RepositoryQueryBase<Entities.Customer, int, CustomerContext>, ICustomerRepository
     {
-        private readonly CustomerContext _dbContext;
-        private readonly IUnitOfWork<CustomerContext> _unitOfWork;
-
-        public CustomerRepository(CustomerContext dbContext, IUnitOfWork<CustomerContext> unitOfWork) 
-            : base(dbContext, unitOfWork)
+        public CustomerRepository(CustomerContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
-            _unitOfWork = unitOfWork;
         }
         public Task<Entities.Customer?> GetCustomerByUserNameAsync(string userName) => 
                 FindByCondition(x => x.UserName.Equals(userName))

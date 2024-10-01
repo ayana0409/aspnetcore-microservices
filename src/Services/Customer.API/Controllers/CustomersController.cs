@@ -10,6 +10,8 @@ namespace Customer.API.Controllers
     {
         public static void MapCustomersAPI(this WebApplication app)
         {
+            app.MapGet("/", () => "Welcome to Customer Minimal API!");
+
             app.MapGet("/api/customers/{username}",
                 async (string username, ICustomerRepository repository) =>
                 {

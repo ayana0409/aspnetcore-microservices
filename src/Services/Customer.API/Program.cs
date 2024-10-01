@@ -1,7 +1,6 @@
 using Common.Logging;
 using Contracts.Common.Interfaces;
 using Customer.API.Controllers;
-using Customer.API.Entities;
 using Customer.API.Persistence;
 using Customer.API.Repositories;
 using Customer.API.Repositories.Interfaces;
@@ -27,8 +26,7 @@ try
         options.UseNpgsql(connectionString));
 
     builder.Services.AddScoped<ICustomerRepository, CustomerRepository>()
-        .AddScoped(typeof(IRepositoryBaseAsync<,,>), typeof(RepositoryBaseAsync<,,>))
-        .AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+        .AddScoped(typeof(IRepositoryQueryBase<,,>), typeof(RepositoryQueryBase<,,>));
 
 
     var app = builder.Build();
@@ -41,7 +39,7 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection(); // Production only
 
     app.UseAuthorization();
 

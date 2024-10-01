@@ -38,6 +38,13 @@ services:
     build: 
         context: .
         dockerfile: Services/Product.API/Dockerfile
+
+  customer.api:
+    image: ${DOCKET_REGISTRY-}customer.api:${PLATFORM:-linux}-${TAG:-latest}
+    build: 
+        context: .
+        dockerfile: Services/Customer.API/Dockerfile
+
 #network section
 networks:
   default:
