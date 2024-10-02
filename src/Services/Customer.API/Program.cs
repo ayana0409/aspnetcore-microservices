@@ -8,13 +8,20 @@ using Infastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog(Serilogger.Configure);
 
 Log.Information("Starting Customer API up");
 
 try
 {
+    builder.Host.UseSerilog(Serilogger.Configure);
+    builder.Services.Configure<RouteOptions>(options
+        => options.LowercaseQueryStrings = true);
+
     builder.Services.AddControllers();
 
     builder.Services.AddEndpointsApiExplorer();

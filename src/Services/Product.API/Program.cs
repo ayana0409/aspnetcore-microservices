@@ -3,6 +3,9 @@ using Product.API.Extensions;
 using Product.API.Persistence;
 using Serilog;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,9 @@ Log.Information("Starting Product API up");
 try
 {
     builder.Host.UseSerilog(Serilogger.Configure);
+    builder.Services.Configure<RouteOptions>(options
+        => options.LowercaseQueryStrings = true);
+
     builder.AddAppConfigurations();
     // Add service to the controller
     builder.Services.AddInfrastructure(builder.Configuration);
