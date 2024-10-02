@@ -2,9 +2,8 @@
 using Contracts.Domains;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Reflection.Metadata.Ecma335;
 
-namespace Infastructure.Common
+namespace Infrastructure.Common
 {
     public class RepositoryBase<T, K, TContext> : RepositoryQueryBase<T, K, TContext>,
         IRepositoryBaseAsync<T, K, TContext> where T : EntityBase<K>

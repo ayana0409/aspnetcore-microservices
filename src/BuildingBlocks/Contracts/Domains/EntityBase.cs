@@ -1,4 +1,5 @@
 ﻿using Contracts.Domains.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Contracts.Domains
 {

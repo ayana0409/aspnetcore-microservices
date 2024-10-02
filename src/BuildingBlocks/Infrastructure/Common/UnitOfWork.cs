@@ -1,7 +1,7 @@
 ﻿using Contracts.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infastructure.Common
+namespace Infrastructure.Common
 {
     public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbContext
     {

@@ -1,5 +1,5 @@
 ﻿using Contracts.Common.Interfaces;
-using Infastructure.Common;
+using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;

@@ -4,7 +4,7 @@ using Customer.API.Controllers;
 using Customer.API.Persistence;
 using Customer.API.Repositories;
 using Customer.API.Repositories.Interfaces;
-using Infastructure.Common;
+using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 

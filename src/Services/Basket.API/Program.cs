@@ -1,4 +1,5 @@
 using Common.Logging;
+using Basket.API.Extensions;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -12,6 +13,11 @@ Log.Information("Starting Basket API up");
 try
 {
     builder.Host.UseSerilog(Serilogger.Configure);
+    builder.AddAppConfigurations();
+
+    builder.Services.ConfigurationService();
+    builder.Services.ConfigureRedis(builder.Configuration);
+
     builder.Services.Configure<RouteOptions>(options 
         => options.LowercaseQueryStrings = true);
 
