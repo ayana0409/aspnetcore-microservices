@@ -1,4 +1,6 @@
 using Common.Logging;
+using Ordering.Infrastructure;
+using Ordering.Infrastructure.Persistence;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -15,6 +17,8 @@ try
     builder.Services.Configure<RouteOptions>(options
         => options.LowercaseQueryStrings = true);
 
+    builder.Services.AddInfrastructureServices(builder.Configuration);
+
     builder.Services.AddControllers();
 
     builder.Services.AddEndpointsApiExplorer();
@@ -28,6 +32,13 @@ try
         app.UseSwaggerUI();
     }
 
+    using (var scope = app.Services.CreateScope())
+    {
+        var orderContextSeed = scope.ServiceProvider.GetRequiredService<OrderContextSeed>();
+        await orderContextSeed.InitialiseAsync();
+        await orderContextSeed.SeedAsync();
+    }
+
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
@@ -38,6 +49,9 @@ try
 }
 catch (Exception ex)
 {
+    string type = ex.GetType().Name;
+    if (type.Equals("StopTheHostException", StringComparison.Ordinal)) throw;
+
     Log.Fatal(ex, "Unhandled exception");
 }
 finally

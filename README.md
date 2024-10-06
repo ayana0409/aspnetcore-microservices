@@ -40,6 +40,11 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d --remo
 - Customer API: http://localhost:5003/api/customers
 - Basket API: http://localhost:5004/api/baskets
 
+- Migration
+CD to Ordering folder: Add-Migration InitOrderDB -Project Ordering.Infrastructure -StartupProject Ordering.API -OutputDir Persistence/Migrations
+
+- Update Database
+update-database -Project Ordering.Infrastructure -StartupProject Ordering.API
 ---
 ## Docker Application URLs - PRODUCTION Environment:
 
