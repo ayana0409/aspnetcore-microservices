@@ -53,7 +53,8 @@ namespace Ordering.Infrastructure.Persistence
                     {
                         UserName = "customer1", FirstName = "customer1", LastName = "customer1",
                         EmailAddress = "customer1@local.com",
-                        ShippingAddress = "Mars", InvoiceAddress = "Mars", TotalPrice = 999999
+                        ShippingAddress = "Mars", InvoiceAddress = "Mars", TotalPrice = 999999,
+                        Status = Domain.Enums.EOrderStatus.New
                     });
             }
         }
