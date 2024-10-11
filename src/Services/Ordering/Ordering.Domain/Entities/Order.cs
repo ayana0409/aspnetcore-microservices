@@ -29,6 +29,6 @@ namespace Ordering.Domain.Entities
         [Column(TypeName = "nvarchar(max)")]
         public string InvoiceAddress { get; set; } = string.Empty;
 
-        public EOrderStatus Status { get; set; }
+        public EOrderStatus Status { get; set; } = EOrderStatus.New;
     }
 }

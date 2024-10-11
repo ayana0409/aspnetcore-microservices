@@ -7,12 +7,12 @@ using Shared.SeedWork;
 
 namespace Ordering.Application.Features.V1.Orders
 {
-    public class GerOrderQueryHandler : IRequestHandler<GetOrdersQuery, ApiResult<List<OrderDto>>>
+    public class GetOrderQueryHandler : IRequestHandler<GetOrdersQuery, ApiResult<List<OrderDto>>>
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IOrderRepository _repository;
-        public GerOrderQueryHandler(IOrderRepository repository, IMapper mapper, ILogger logger)
+        public GetOrderQueryHandler(IOrderRepository repository, IMapper mapper, ILogger logger)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
