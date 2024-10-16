@@ -16,7 +16,7 @@ namespace Ordering.Application.Common.Exceptions
         {
         }
 
-        protected NotFoundException(string name, object key) : base($"Entity \"{name}\" was not found.")
+        public NotFoundException(string name, object key) : base($"Entity \"{name}\" was not found.")
         {
         }
     }

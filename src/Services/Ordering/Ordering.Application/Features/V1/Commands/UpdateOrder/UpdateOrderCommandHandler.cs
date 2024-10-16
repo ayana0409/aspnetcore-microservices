@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Ordering.Application.Common.Exceptions;
 using Ordering.Application.Common.Interfaces;
 using Ordering.Application.Common.Models;
 using Ordering.Domain.Entities;
@@ -24,15 +25,21 @@ namespace Ordering.Application.Features.V1.Orders
         private const string MethodName = "UpdateOrderCommandHandler";
         public async Task<ApiResult<OrderDto>> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            _logger.Information($"BEGIN: {MethodName} - Username: {request.UserName}");
+            var orderEntity = await _repository.GetByIdAsync(request.Id)
+                                ?? throw new NotFoundException(nameof(Order), request.Id);
 
-            Order orderEntity = _mapper.Map<Order>(request);
-            await _repository.UpdateAsync(orderEntity);
+            _logger.Information($"BEGIN: {MethodName} - Order: {request.Id}");
+
+            orderEntity = _mapper.Map(request, orderEntity);
+            
+            var updatedOrder = await _repository.UpdateOrderAsync(orderEntity);
             await _repository.SaveChangeAsync();
+            _logger.Information($"Updated Order: {updatedOrder.Id}");
+            var result = _mapper.Map<OrderDto>(orderEntity);
 
-            _logger.Information($"END: {MethodName} - Username: {request.UserName}");
+            _logger.Information($"END: {MethodName} - Order: {request.Id}");
 
-            return new ApiSuccessResult<OrderDto>(_mapper.Map<OrderDto>(orderEntity), "Success");
+            return new ApiSuccessResult<OrderDto>(result, "Success");
         }
     }
 }
