@@ -24,7 +24,8 @@ namespace Ordering.Application.Features.V1.Orders
 
             Order orderEntity = await _repository.GetByIdAsync(request.Id)
                                     ?? throw new NotFoundException($"Not found order {request.Id}.");
-            await _repository.DeleteAsync(orderEntity);
+            _repository.Delete(orderEntity);
+            orderEntity.DeletedOrder();
             await _repository.SaveChangeAsync();
 
             _logger.Information($"END: {MethodName} - OrderId: {request.Id}");

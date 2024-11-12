@@ -21,7 +21,7 @@ namespace Ordering.API.Controllers
         private static class RouteNames
         {
             public const string GetOrders = nameof(GetOrders);
-            //public const string CreateOrder = nameof(CreateOrder);
+            public const string CreateOrder = nameof(CreateOrder);
             public const string UpdateOrder = nameof(UpdateOrder);
             public const string DeleteOrder = nameof(DeleteOrder);
         }
@@ -37,13 +37,13 @@ namespace Ordering.API.Controllers
             return Ok(result);
         }
 
-        //[HttpPost(Name = RouteNames.CreateOrder)]
-        //[ProducesDefaultResponseType(typeof(ApiResult<long>))]
-        //public async Task<ActionResult<ApiResult<long>>> CreateOrder([FromBody] CreateOrderCommand command)
-        //{
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result);
-        //}
+        [HttpPost(Name = RouteNames.CreateOrder)]
+        [ProducesDefaultResponseType(typeof(ApiResult<long>))]
+        public async Task<ActionResult<ApiResult<long>>> CreateOrder([FromBody] CreateOrderCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
 
         [HttpPut("{id}",Name = RouteNames.UpdateOrder)]
         [ProducesDefaultResponseType(typeof(ApiResult<OrderDto>))]

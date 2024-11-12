@@ -25,13 +25,14 @@ namespace Ordering.Application.Features.V1.Orders
             _logger.Information($"BEGIN: {MethodName} - Username: {request.UserName}");
 
             Order orderEntity = _mapper.Map<Order>(request);
-            var addedOrder = await _repository.CreateOrderAsync(orderEntity);
+            _repository.Create(orderEntity);
+            orderEntity.AddedOrder();
             await _repository.SaveChangeAsync();
-            _logger.Information($"Created order: {addedOrder.Id}");
+            _logger.Information($"Created order: {orderEntity.Id}");
 
             _logger.Information($"END: {MethodName} - Username: {request.UserName}");
 
-            return new ApiSuccessResult<long>(addedOrder.Id, "Success");
+            return new ApiSuccessResult<long>(orderEntity.Id, "Success");
         }
     }
 }

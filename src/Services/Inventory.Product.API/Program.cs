@@ -1,15 +1,26 @@
 using Common.Logging;
+using Inventory.Product.API.Extensions;
 using Serilog;
 
 
-var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
-builder.Host.UseSerilog(Serilogger.Configure);
+var builder = WebApplication.CreateBuilder(args);
 
 Log.Information("Starting Inventory Product API up");
 
 try
 {
+    builder.Host.UseSerilog(Serilogger.Configure);
+    builder.Services.Configure<RouteOptions>(options
+        => options.LowercaseQueryStrings = true);
+
+    builder.Services.AddInfrastructureService();
+    builder.Services.AddConfigurationSettings(builder.Configuration);
+    builder.Services.ConfigureMongoDbClient();
+
     builder.Services.AddControllers();
 
     builder.Services.AddEndpointsApiExplorer();
@@ -23,21 +34,26 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
 
     app.UseAuthorization();
 
-    app.MapControllers();
+    app.MapDefaultControllerRoute();
+
+    app.MigrateDatabase();
 
     app.Run();
 }
 catch (Exception ex)
 {
+    string type = ex.GetType().Name;
+    if (type.Equals("StopTheHostException", StringComparison.Ordinal)) throw;
+
     Log.Fatal(ex, "Unhandled exception");
 }
 finally
 {
-    Log.Information("Shut down Inventory Product API complete");
+    Log.Information("Shut down Ordering API complete");
     Log.CloseAndFlush();
 }
 

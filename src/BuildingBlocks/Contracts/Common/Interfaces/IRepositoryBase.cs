@@ -15,14 +15,20 @@ namespace Contracts.Common.Interfaces
         Task<T?> GetByIdAsync(K id);
         Task<T?> GetByIdAsync(K id, params Expression<Func<T, object>>[] includeProperties);
     }
-    public interface IRepositoryBaseAsync<T, K> : IRepositoryQueryBase<T, K>
+    public interface IRepositoryBase<T, K> : IRepositoryQueryBase<T, K>
         where T : EntityBase<K>
     {
+        void Create(T entity);
         Task<K> CreateAsync(T entity);
+        IList<K> CreateList(IEnumerable<T> entities);
         Task<IList<K>> CreateListAsync(IEnumerable<T> entities);
+        void Update(T entity);
         Task UpdateAsync(T entity);
+        void UpdateList(IEnumerable<T> entities);
         Task UpdateListAsync(IEnumerable<T> entities);
+        void Delete(T entity);
         Task DeleteAsync(T entity);
+        void DeleteList(IEnumerable<T> entities);
         Task DeleteListAsync(IEnumerable<T> entities);
         Task<int> SaveChangeAsync();
 
@@ -37,7 +43,7 @@ namespace Contracts.Common.Interfaces
     {
     }
     public interface IRepositoryBaseAsync<T, K, TContext> 
-        : IRepositoryBaseAsync<T, K>
+        : IRepositoryBase<T, K>
         where T : EntityBase<K>
         where TContext : DbContext
     {
