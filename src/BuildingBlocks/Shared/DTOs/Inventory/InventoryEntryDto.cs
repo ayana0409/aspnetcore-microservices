@@ -2,7 +2,7 @@
 
 namespace Shared.DTOs.Inventory
 {
-    public class InventotyEntryDto
+    public class InventoryEntryDto
     {
         public virtual string Id { get; protected init; } = string.Empty;
 
