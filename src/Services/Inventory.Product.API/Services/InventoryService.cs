@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using Infrastructure.Common;
 using Infrastructure.Common.Models;
 using Infrastructure.Extensions;
 using Inventory.Product.API.Entities;
-using Inventory.Product.API.Extensions;
-using Inventory.Product.API.Repositories.Abstraction;
 using Inventory.Product.API.Services.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Shared.Configurations;
 using Shared.DTOs.Inventory;
 
 namespace Inventory.Product.API.Services
@@ -14,7 +14,7 @@ namespace Inventory.Product.API.Services
     public class InventoryService : MongoDbRepository<InventoryEntry>, IInventoryService
     {
         private readonly IMapper _mapper;
-        public InventoryService(IMongoClient client, DatabaseSettings settings, IMapper mapper) : base(client, settings)
+        public InventoryService(IMongoClient client, MongoDbSettings settings, IMapper mapper) : base(client, settings)
         {
             _mapper = mapper;
         }
@@ -29,7 +29,7 @@ namespace Inventory.Product.API.Services
             return result;
         }
 
-        public async Task<IEnumerable<InventoryEntryDto>> GetAllByItemNoPagingAsync(GetInventoryPagingQuery query)
+        public async Task<PagedList<InventoryEntryDto>> GetAllByItemNoPagingAsync(GetInventoryPagingQuery query)
         {
             var filterSearchTerm = Builders<InventoryEntry>.Filter.Empty;
             var filterItemNo = Builders<InventoryEntry>.Filter.Eq(x => x.ItemNo, query.ItemNo());
@@ -59,7 +59,7 @@ namespace Inventory.Product.API.Services
         {
             var entity = new InventoryEntry(ObjectId.GenerateNewId().ToString())
             {
-                ItemNo = model.ItemNo,
+                ItemNo = itemNo,
                 Quantity = model.Quantity,
                 DocumentType = model.DocumentType,
             };

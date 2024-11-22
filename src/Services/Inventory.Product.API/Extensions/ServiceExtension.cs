@@ -12,17 +12,17 @@ namespace Inventory.Product.API.Extensions
         internal static IServiceCollection AddConfigurationSettings(this IServiceCollection services,
             IConfiguration configuration)
         {
-            var databaseSettings = configuration.GetSection(nameof(DatabaseSettings))
-                .Get<DatabaseSettings>() 
+            var databaseSettings = configuration.GetSection(nameof(MongoDbSettings))
+                .Get<MongoDbSettings>() 
                 ?? throw new ArgumentNullException("Invalid Inventory Service DatabaseSettings");
-            services.AddSingleton<DatabaseSettings>(databaseSettings);
+            services.AddSingleton<MongoDbSettings>(databaseSettings);
 
             return services;
         }
 
         private static string GetMongoConnectionString(this IServiceCollection services)
         {
-            var settings = services.GetOption<DatabaseSettings>(nameof(DatabaseSettings));
+            var settings = services.GetOption<MongoDbSettings>(nameof(MongoDbSettings));
             if (settings == null || string.IsNullOrEmpty(settings.ConnectionString))
                 throw new ArgumentNullException("Databasesetting is not configure");
 

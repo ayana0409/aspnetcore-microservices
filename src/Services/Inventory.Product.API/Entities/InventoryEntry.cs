@@ -1,5 +1,5 @@
-﻿using Inventory.Product.API.Entities.Abstraction;
-using Inventory.Product.API.Extensions;
+﻿using Contracts.Domains;
+using Infrastructure.Extensions;
 using MongoDB.Bson.Serialization.Attributes;
 using Shared.Enums.Inventory;
 
@@ -20,12 +20,12 @@ namespace Inventory.Product.API.Entities
         public EDocumentType DocumentType { get; set; }
 
         [BsonElement("documentNo")]
-        public string DocumentNo { get; set; } = string.Empty;
+        public string DocumentNo { get; set; } = Guid.NewGuid().ToString();
         [BsonElement("itemNo")]
         public string ItemNo { get; set; } = string.Empty;
         [BsonElement("quantity")]
         public int Quantity { get; set; }
         [BsonElement("externalDocumentNo")]
-        public string ExternalDocumentNo { get; set; } = string.Empty;
+        public string ExternalDocumentNo { get; set; } = Guid.NewGuid().ToString();
     }
 }
