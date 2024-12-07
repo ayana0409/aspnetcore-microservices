@@ -15,5 +15,9 @@ namespace Basket.API.Entities
         public string ItemNo { get; set; } = string.Empty;
         [Required(ErrorMessage = "The ItemNo field is required")]
         public string ItemName { get; set; } = string.Empty;
+
+        public int AvailableQuantity { get; set; }
+
+        public void SetAvailableQuantity(int quantity) => (AvailableQuantity) = quantity;
     }
 }
