@@ -7,7 +7,7 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseSerilog(Serilogger.Configure);
-    Log.Information("Starting Inventory Product API up");
+    Log.Information("Starting Inventory Grpc API up");
     builder.Services.AddConfigurationSettings(builder.Configuration);
     builder.Services.ConfigureMongoDbClient();
     builder.Services.AddInfrastructureService();
