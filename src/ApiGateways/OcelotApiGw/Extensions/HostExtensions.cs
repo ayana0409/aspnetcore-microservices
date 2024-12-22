@@ -13,7 +13,7 @@ namespace OcelotApiGw.Extensions
                     .AddJsonFile(path: $"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                     .AddJsonFile(path: $"ocelot.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
                     .AddEnvironmentVariables();
-
+            Console.WriteLine(env.EnvironmentName);
             builder.Host.UseSerilog(Serilogger.Configure);
         }
     }

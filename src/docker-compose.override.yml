@@ -112,6 +112,7 @@ services:
     - ASPNETCORE_ENVIRONMENT=Development
     - ASPNETCORE_URLS=http://+:80   
     - "ConnectionStrings:DefaultConnectionString=Server=productdb;Database=ProductDB;Uid=root;Pwd=Passw0rd!;"
+    - "JwtSettings:Key=gblMBqRdfhLKAHJwe" 
     depends_on:
     - productdb
     ports:
@@ -185,6 +186,22 @@ services:
     - inventorydb
     ports:
     - "6007:80"
+    restart: always
+
+  apigw.ocelot:
+    container_name: apigw.ocelot
+    environment:
+    - ASPNETCORE_ENVIRONMENT=Local
+    - ASPNETCORE_URLS=http://+:80   
+    - GlobalConfiguration:BaseUrl=http://apigw.ocelot 
+    depends_on:
+    - customer.api
+    - basket.api
+    - product.api
+    - ordering.api
+    - inventory.product.api 
+    ports:
+    - "6001:80"
     restart: always
 
 

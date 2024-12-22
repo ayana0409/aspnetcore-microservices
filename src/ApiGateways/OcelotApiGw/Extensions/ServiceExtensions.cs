@@ -6,6 +6,9 @@ using Shared.Configurations;
 using System.Text;
 using Infrastructure.Extensions;
 using Infrastructure.Identity;
+using Ocelot.Provider.Polly;
+using Ocelot.Cache.CacheManager;
+using Ocelot.Cache;
 
 namespace OcelotApiGw.Extensions
 {
@@ -23,7 +26,13 @@ namespace OcelotApiGw.Extensions
 
         public static void ConfigureOcelot(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddOcelot(configuration);
+            services.AddOcelot(configuration)
+                .AddPolly()
+                .AddCacheManager(x =>
+                {
+                    x.WithDictionaryHandle();
+                });
+
             services.AddTransient<ITokenService, TokenService>();
             services.AddJwtAuthentication();
         }

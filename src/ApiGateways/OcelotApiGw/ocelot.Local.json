@@ -1,9 +1,9 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5001"
+    "BaseUrl": "http://apigw.ocelot"
   },
   "Routes": [
-    // Customer api: http://localhost:5003/api/customers
+    // Customer api: http://localhost:6003/api/customers
     {
       "UpstreamPathTemplate": "/customers/{username}",
       "UpstreamHttpMethod": [
@@ -13,8 +13,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "host.docker.internal",
+          "Port": 6003
         }
       ]
     },
@@ -28,8 +28,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "host.docker.internal",
+          "Port": 6002
         }
       ]
     },
@@ -43,8 +43,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "host.docker.internal",
+          "Port": 6002
         }
       ],
       "RouteClaimsRequirement": {
@@ -60,8 +60,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "host.docker.internal",
+          "Port": 6002
         }
       ],
       "RateLimitOptions": {
@@ -89,8 +89,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "host.docker.internal",
+          "Port": 6002
         }
       ],
       "RateLimitOptions": {
@@ -103,7 +103,7 @@
       "QoSOptions": {
         "ExceptionAllowedBeforeBreaking": 2,
         "DurationOfBreak": 1000,
-        "TimeoutValue": 5000
+        "TimeoutValue": 6000
       }
     },
     {
@@ -115,8 +115,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "host.docker.internal",
+          "Port": 6002
         }
       ]
     },
@@ -131,8 +131,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5004
+          "Host": "host.docker.internal",
+          "Port": 6004
         }
       ]
     },
@@ -145,8 +145,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5004
+          "Host": "host.docker.internal",
+          "Port": 6004
         }
       ]
     },
@@ -159,8 +159,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5004
+          "Host": "host.docker.internal",
+          "Port": 6004
         }
       ]
     },
@@ -176,8 +176,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5005
+          "Host": "host.docker.internal",
+          "Port": 6005
         }
       ]
     },
@@ -190,8 +190,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5005
+          "Host": "host.docker.internal",
+          "Port": 6005
         }
       ]
     },
@@ -205,8 +205,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5006
+          "Host": "host.docker.internal",
+          "Port": 6006
         }
       ]
     },
@@ -219,8 +219,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5006
+          "Host": "host.docker.internal",
+          "Port": 6006
         }
       ]
     },
@@ -234,8 +234,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5006
+          "Host": "host.docker.internal",
+          "Port": 6006
         }
       ]
     },
@@ -248,8 +248,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5006
+          "Host": "host.docker.internal",
+          "Port": 6006
         }
       ]
     }
