@@ -4,7 +4,7 @@
     {
         public string Route { get; set; }
         public string ServerName { get; set; }
-        public DatabaseSettings Storage { get; set; }
+        public DatabaseSettings? Storage { get; set; }
         public Dashboard Dashboard { get; set; }
     }
 
