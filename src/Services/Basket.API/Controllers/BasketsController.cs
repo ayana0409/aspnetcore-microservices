@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using Basket.API.Services.Interfaces;
 
 namespace Basket.API.Controllers
 {
@@ -19,13 +20,16 @@ namespace Basket.API.Controllers
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IMapper _mapper;
         private readonly StockItemGrpcService _stockItemGrpcService;
+        private readonly IEmailTemplateService _emailTemplateService;
 
-        public BasketsController(IBasketRepository basketRepository, IPublishEndpoint publishEndpoint, IMapper mapper, StockItemGrpcService stockItemGrpcService)
+        public BasketsController(IBasketRepository basketRepository, IPublishEndpoint publishEndpoint, IMapper mapper, 
+            StockItemGrpcService stockItemGrpcService, IEmailTemplateService emailTemplateService)
         {
             _basketRepository = basketRepository;
             _publishEndpoint = publishEndpoint;
             _mapper = mapper;
             _stockItemGrpcService = stockItemGrpcService;
+            _emailTemplateService = emailTemplateService;
         }
 
         [HttpGet("{username}", Name = "GetBasket")]
@@ -72,7 +76,7 @@ namespace Basket.API.Controllers
             var basket = await _basketRepository.GetBasketByUserName(basketCheckout.UserName);
             if (basket == null) return NotFound();
 
-            // publish checkout event to Evenbus Message
+            // publish checkout event to Eventbus Message
             var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
             eventMessage.TotalPrice = basket.TotalPrice;
             await _publishEndpoint.Publish(eventMessage);
@@ -80,6 +84,21 @@ namespace Basket.API.Controllers
             await _basketRepository.DeleteBasketFromUserName(basketCheckout.UserName);
 
             return Accepted();
+        }
+
+        [HttpPost(template: "[action]", Name = "SendEmailReminder")]
+        public ContentResult SendEmailReminder()
+        {
+            var emailTemplate = _emailTemplateService
+                .GenerateReminderCheckoutOrderEmail("u1@example.com", "test");
+
+            var result = new ContentResult
+            {
+                Content = emailTemplate,
+                ContentType = "text/html"
+            };
+
+            return result;
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using Basket.API.GrpcServices;
 using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
+using Basket.API.Services;
+using Basket.API.Services.Interfaces;
 using Contracts.Common.Interfaces;
 using EventBus.Messages.IntegrationEvent.Interfaces;
 using Infrastructure.Common;
 using Infrastructure.Extensions;
 using Inventory.Grpc.Protos;
 using MassTransit;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shared.Configurations;
 
@@ -35,6 +38,7 @@ namespace Basket.API.Extensions
         public static IServiceCollection ConfigurationService(this IServiceCollection services) =>
             services.AddScoped<IBasketRepository, BasketRepository>()
                 .AddTransient<ISerializeService, SerializeService>()
+                .AddTransient<IEmailTemplateService, BasketEmailTemplateService>()
             ;
 
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration) 
