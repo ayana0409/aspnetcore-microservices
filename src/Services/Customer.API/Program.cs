@@ -1,10 +1,12 @@
 using Common.Logging;
 using Contracts.Common.Interfaces;
 using Customer.API.Controllers;
+using Customer.API.Extensions;
 using Customer.API.Persistence;
 using Customer.API.Repositories;
 using Customer.API.Repositories.Interfaces;
 using Infrastructure.Common;
+using Infrastructure.ScheduledJobs;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -35,6 +37,9 @@ try
     builder.Services.AddScoped<ICustomerRepository, CustomerRepository>()
         .AddScoped(typeof(IRepositoryQueryBase<,,>), typeof(RepositoryQueryBase<,,>));
 
+    builder.Services.AddConfigurationSettings(builder.Configuration);
+
+    builder.Services.AddHangfireService();
 
     var app = builder.Build();
 
@@ -49,6 +54,8 @@ try
     //app.UseHttpsRedirection(); // Production only
 
     app.UseAuthorization();
+
+    app.UseHangfireDashboard(builder.Configuration);
 
     app.MapControllers();
 
