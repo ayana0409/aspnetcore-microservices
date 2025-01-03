@@ -32,6 +32,12 @@ namespace Basket.API.Extensions
                 .Get<GrpcSettings>() ?? throw new ArgumentNullException("Invalid grpc setting");
             services.AddSingleton<GrpcSettings>(grpcSettings);
 
+            var backgroundJobSettings = configuration.GetSection(nameof(BackgroundJobSettings))
+                .Get<BackgroundJobSettings>() ?? throw new ArgumentNullException("Invalid Background Job Settings");
+            services.AddSingleton<BackgroundJobSettings>(backgroundJobSettings);
+
+
+
             return services;
         }
 
@@ -40,6 +46,9 @@ namespace Basket.API.Extensions
                 .AddTransient<ISerializeService, SerializeService>()
                 .AddTransient<IEmailTemplateService, BasketEmailTemplateService>()
             ;
+
+        public static void ConfigureHttpClientService(this IServiceCollection services)
+            => services.AddHttpClient<BackgroundJobHttpService>();
 
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration) 
         {

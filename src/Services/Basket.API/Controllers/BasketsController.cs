@@ -20,16 +20,14 @@ namespace Basket.API.Controllers
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IMapper _mapper;
         private readonly StockItemGrpcService _stockItemGrpcService;
-        private readonly IEmailTemplateService _emailTemplateService;
 
         public BasketsController(IBasketRepository basketRepository, IPublishEndpoint publishEndpoint, IMapper mapper, 
-            StockItemGrpcService stockItemGrpcService, IEmailTemplateService emailTemplateService)
+            StockItemGrpcService stockItemGrpcService)
         {
             _basketRepository = basketRepository;
             _publishEndpoint = publishEndpoint;
             _mapper = mapper;
             _stockItemGrpcService = stockItemGrpcService;
-            _emailTemplateService = emailTemplateService;
         }
 
         [HttpGet("{username}", Name = "GetBasket")]
@@ -84,21 +82,6 @@ namespace Basket.API.Controllers
             await _basketRepository.DeleteBasketFromUserName(basketCheckout.UserName);
 
             return Accepted();
-        }
-
-        [HttpPost(template: "[action]", Name = "SendEmailReminder")]
-        public ContentResult SendEmailReminder()
-        {
-            var emailTemplate = _emailTemplateService
-                .GenerateReminderCheckoutOrderEmail("u1@example.com", "test");
-
-            var result = new ContentResult
-            {
-                Content = emailTemplate,
-                ContentType = "text/html"
-            };
-
-            return result;
         }
     }
 }

@@ -20,6 +20,7 @@ try
         cfg => cfg.AddProfile(new MappingProfile()));
 
     builder.Services.ConfigurationService();
+    builder.Services.ConfigureHttpClientService();
     builder.Services.ConfigureRedis(builder.Configuration);
     builder.Services.CongfigureGrpcServices();
 

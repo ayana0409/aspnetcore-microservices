@@ -3,6 +3,7 @@
     public class Cart
     {
         public string UserName { get; set; } = string.Empty;
+        public string EmailAddress { get; set; } = string.Empty;
         public List<CartItem> Items { get; set; } = [];
         public Cart()
         { 
@@ -15,5 +16,7 @@
         public decimal TotalPrice => Items.Sum(item => item.ItemPrice * item.Quantity);
 
         public DateTimeOffset LastModifiedDate { get; set; } = DateTimeOffset.Now;
+
+        public string? JobId { get; set; }
     }
 }
