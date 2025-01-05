@@ -1,6 +1,5 @@
-﻿using Hangfire.API.Services;
+﻿using System.ComponentModel.DataAnnotations;
 using Hangfire.API.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs.ScheduledJob;
 
@@ -24,6 +23,14 @@ namespace Hangfire.API.Controllers
                 model.emailContent, model.enqueueAt);
 
             return Ok(jobId);
+        }
+
+        [HttpDelete]
+        [Route("delete/jobId/{id}")]
+        public IActionResult DeleteJobId([Required]string id)
+        {
+            var result = _jobService.ScheduledJobService.Delete(id);
+            return Ok(result);
         }
     }
 }

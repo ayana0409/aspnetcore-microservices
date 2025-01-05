@@ -9,9 +9,9 @@ namespace Basket.API.Services
         {
         }
 
-        public string GenerateReminderCheckoutOrderEmail(string username, string checkouUrl = "baskets")
+        public string GenerateReminderCheckoutOrderEmail(string username)
         {
-            var _checkoutUrl = $"{BackgroundJobSettings.ApiGwUrl}/{checkouUrl}/{username}";
+            var _checkoutUrl = $"{BackgroundJobSettings.ApiGwUrl}/{BackgroundJobSettings.BasketUrl}/{username}";
             var emailText = ReadEmailTemplateContent("reminder-checkout-order");
             var emailReplaceText = emailText.Replace("[username]", username)
                 .Replace("[checkoutUrl]", _checkoutUrl);

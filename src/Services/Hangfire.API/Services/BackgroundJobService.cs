@@ -40,5 +40,7 @@ namespace Hangfire.API.Services
 
             return null;
         }
+
+        public IScheduledJobService ScheduledJobService => _scheduledJobService;
     }
 }
