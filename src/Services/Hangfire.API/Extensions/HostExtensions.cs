@@ -23,7 +23,7 @@ namespace Hangfire.API.Extensions
 
             app.UseHangfireDashboard(hangfireRoute, new DashboardOptions()
             {
-                //Authorization = new[] {},
+                Authorization = new[] { new AuthorizationFilter() },
                 DashboardTitle = configureDashboard.DashboardTitle,
                 StatsPollingInterval = configureDashboard.StatsPollingInterval,
                 AppPath = configureDashboard.AppPath,
